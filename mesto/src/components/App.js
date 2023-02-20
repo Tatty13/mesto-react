@@ -4,41 +4,41 @@ import defaultAvatar from '../images/avatar.png';
 function App() {
   return (
     <>
-      <div classNameName="page__wrap">
-        <header classNameName="header">
-          <a classNameName="logo" href="#root"> </a>
+      <div className="page__wrap">
+        <header className="header">
+          <a className="logo" href="#root"> </a>
         </header>
-        <main classNameName="content">
-          <section classNameName="profile">
-            <div classNameName="profile__avatar-wrap">
-              <img classNameName="profile__avatar" src={defaultAvatar} alt="Аватар" />
+        <main className="content">
+          <section className="profile">
+            <div className="profile__avatar-wrap">
+              <img className="profile__avatar" src={defaultAvatar} alt="Аватар" />
             </div>
-            <div classNameName="profile__info">
-              <h1 classNameName="profile__name"> </h1>
-              <p classNameName="profile__about"></p>
-              <button classNameName="profile__edit-btn" type="button" aria-label="Редактировать"></button>
+            <div className="profile__info">
+              <h1 className="profile__name"> </h1>
+              <p className="profile__about"></p>
+              <button className="profile__edit-btn" type="button" aria-label="Редактировать"></button>
             </div>
-            <button classNameName="profile__add-btn" type="button" aria-label="Добавить"></button>
+            <button className="profile__add-btn" type="button" aria-label="Добавить"></button>
           </section>
-          <section classNameName="cards" aria-label="Место">
-            <ul classNameName="cards__list"></ul>
+          <section className="cards" aria-label="Место">
+            <ul className="cards__list"></ul>
           </section>
         </main>
-        <footer classNameName="footer">
-          <p classNameName="footer__copyright">© 2020 Mesto Russia</p>
+        <footer className="footer">
+          <p className="footer__copyright">© 2020 Mesto Russia</p>
         </footer>
       </div>
 
       <dialog className="popup popup_content_edit-profile">
         <div className="popup__container">
           <h2 className="popup__title">Редактировать профиль</h2>
-          <form className="form form_type_edit-profile" action="#" name="editProfile" id="editProfile" novalidate>
+          <form className="form form_type_edit-profile" action="#" name="editProfile" id="editProfile" noValidate>
             <label>
-              <input className="form__input" type="text" name="name" placeholder="Введите имя" minlength="2" maxlength="40" required />
+              <input className="form__input" type="text" name="name" placeholder="Введите имя" minLength="2" maxLength="40" required />
               <span className="form__input-error name-input-error"></span>
             </label>
             <label>
-              <input className="form__input" type="text" name="about" minlength="2" maxlength="200" placeholder="Введите род деятельности" required />
+              <input className="form__input" type="text" name="about" minLength="2" maxLength="200" placeholder="Введите род деятельности" required />
               <span className="form__input-error about-input-error"></span>
             </label>
             <button className="form__submit-btn" type="submit" name="submit-btn">Сохранить</button>
@@ -50,7 +50,7 @@ function App() {
       <dialog className="popup popup_content_edit-avatar">
         <div className="popup__container">
           <h2 className="popup__title">Обновить аватар</h2>
-          <form className="form form_type_edit-avatar" action="#" name="editAvatar" id="editAvatar" novalidate>
+          <form className="form form_type_edit-avatar" action="#" name="editAvatar" id="editAvatar" noValidate>
             <label>
               <input className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
               <span className="form__input-error avatar-input-error"></span>
@@ -64,9 +64,9 @@ function App() {
       <dialog className="popup popup_content_add-card">
         <div className="popup__container">
           <h2 className="popup__title">Новое место</h2>
-          <form className="form form_type_add-card" action="#" name="addCard" id="addCard" novalidate>
+          <form className="form form_type_add-card" action="#" name="addCard" id="addCard" noValidate>
             <label>
-              <input className="form__input" type="text" name="name" placeholder="Название" minlength="2" maxlength="30" required />
+              <input className="form__input" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required />
               <span className="form__input-error name-input-error"></span>
             </label>
             <label>
@@ -90,7 +90,7 @@ function App() {
       <dialog className="popup popup_content_confirmation">
         <div className="popup__container">
           <h2 className="popup__title">Вы уверены?</h2>
-          <form className="form form_type_confirmation" action="#" name="confirmDelete" id="confirmDelete" novalidate>
+          <form className="form form_type_confirmation" action="#" name="confirmDelete" id="confirmDelete" noValidate>
             <button className="form__submit-btn" type="submit" name="submit-btn">Да</button>
           </form>
           <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
