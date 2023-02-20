@@ -1,32 +1,14 @@
-import defaultAvatar from '../images/avatar.png';
-// import './App.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 
 function App() {
   return (
     <>
       <div className="page__wrap">
-        <header className="header">
-          <a className="logo" href="#root"> </a>
-        </header>
-        <main className="content">
-          <section className="profile">
-            <div className="profile__avatar-wrap">
-              <img className="profile__avatar" src={defaultAvatar} alt="Аватар" />
-            </div>
-            <div className="profile__info">
-              <h1 className="profile__name"> </h1>
-              <p className="profile__about"></p>
-              <button className="profile__edit-btn" type="button" aria-label="Редактировать"></button>
-            </div>
-            <button className="profile__add-btn" type="button" aria-label="Добавить"></button>
-          </section>
-          <section className="cards" aria-label="Место">
-            <ul className="cards__list"></ul>
-          </section>
-        </main>
-        <footer className="footer">
-          <p className="footer__copyright">© 2020 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
       </div>
 
       <dialog className="popup popup_content_edit-profile">
