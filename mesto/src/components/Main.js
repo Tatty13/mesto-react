@@ -1,18 +1,19 @@
 import defaultAvatar from '../images/avatar.png';
 
-function Main() {
+function Main({onEditAvatar, onEditProfile, onAddPlace}) {
+
   return (
     <main className="content">
       <section className="profile">
-        <div className="profile__avatar-wrap">
+        <div className="profile__avatar-wrap" onClick={onEditAvatar}>
           <img className="profile__avatar" src={defaultAvatar} alt="Аватар" />
         </div>
         <div className="profile__info">
           <h1 className="profile__name"> </h1>
           <p className="profile__about"></p>
-          <button className="profile__edit-btn" type="button" aria-label="Редактировать"></button>
+          <button className="profile__edit-btn" type="button" aria-label="Редактировать" onClick={onEditProfile}></button>
         </div>
-        <button className="profile__add-btn" type="button" aria-label="Добавить"></button>
+        <button className="profile__add-btn" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
       </section>
       <section className="cards" aria-label="Место">
         <ul className="cards__list"></ul>
