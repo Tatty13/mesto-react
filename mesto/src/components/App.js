@@ -1,20 +1,87 @@
+import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
+import ErrorPopup from './ErrorPopup';
 
 function App() {
+  
+  const [isEditAvatarPopupOpen, setEditAvatarPopupState] = React.useState();
+  const [isEditProfilePopupOpen, setEditProfilePopupState] = React.useState();
+  const [isAddPlacePopupOpen, setAddPlacePopupState] = React.useState();
+
+  
+  function handleEditAvatarClick() {
+    setEditAvatarPopupState(!isEditAvatarPopupOpen);
+    document.addEventListener('keydown', handleEscClose);
+  }
+
+  function handleEditProfileClick() {
+    setEditProfilePopupState(!isEditProfilePopupOpen);
+    document.addEventListener('keydown', handleEscClose);
+  }
+
+  function handleAddPlaceClick() {
+    setAddPlacePopupState(!isAddPlacePopupOpen);
+    document.addEventListener('keydown', handleEscClose);
+  }
+
+  /* -------------------------------------------- */
+  function closePopup(popup) {
+    document.removeEventListener('keydown', handleEscClose);
+    popup.classList.remove('popup_open');
+  }
+  
+  function handleEscClose (evt) {
+    if (evt.code === 'Escape')
+    closePopup(document.querySelector('.popup_open'));
+  }
+  
+  function closeAllPopups(evt) {
+    const currentTarget = evt.target;
+    const popup = currentTarget.closest('.popup');
+    if (currentTarget === popup || currentTarget.classList.contains('popup__close-btn')) {
+      closePopup(popup)
+    }
+  }
+  /* -------------------------------------------- */
+
   return (
     <>
       <div className="page__wrap">
         <Header />
-        <Main />
+        <Main
+          onEditAvatar={handleEditAvatarClick}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+        />
         <Footer />
       </div>
 
-      <dialog className="popup popup_content_edit-profile">
-        <div className="popup__container">
-          <h2 className="popup__title">Редактировать профиль</h2>
-          <form className="form form_type_edit-profile" action="#" name="editProfile" id="editProfile" noValidate>
+      <PopupWithForm
+        isOpen={isEditAvatarPopupOpen}
+        title={'Обновить аватар'}
+        name={'edit-avatar'}
+        submitBtnText={'Сохранить'}
+        onClose={closeAllPopups}
+        children={(
+          <label>
+            <input className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
+            <span className="form__input-error avatar-input-error"></span>
+          </label>
+        )}
+      />
+
+      <PopupWithForm
+        isOpen={isEditProfilePopupOpen}
+        title={'Редактировать профиль'}
+        name={'edit-profile'}
+        submitBtnText={'Сохранить'}
+        onClose={closeAllPopups}
+        children={(
+          <>
             <label>
               <input className="form__input" type="text" name="name" placeholder="Введите имя" minLength="2" maxLength="40" required />
               <span className="form__input-error name-input-error"></span>
@@ -23,30 +90,18 @@ function App() {
               <input className="form__input" type="text" name="about" minLength="2" maxLength="200" placeholder="Введите род деятельности" required />
               <span className="form__input-error about-input-error"></span>
             </label>
-            <button className="form__submit-btn" type="submit" name="submit-btn">Сохранить</button>
-          </form>
-          <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
-        </div>
-      </dialog>
+          </>
+        )}
+      />
 
-      <dialog className="popup popup_content_edit-avatar">
-        <div className="popup__container">
-          <h2 className="popup__title">Обновить аватар</h2>
-          <form className="form form_type_edit-avatar" action="#" name="editAvatar" id="editAvatar" noValidate>
-            <label>
-              <input className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
-              <span className="form__input-error avatar-input-error"></span>
-            </label>
-            <button className="form__submit-btn" type="submit" name="submit-btn">Сохранить</button>
-          </form>
-          <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
-        </div>
-      </dialog>
-
-      <dialog className="popup popup_content_add-card">
-        <div className="popup__container">
-          <h2 className="popup__title">Новое место</h2>
-          <form className="form form_type_add-card" action="#" name="addCard" id="addCard" noValidate>
+      <PopupWithForm
+        isOpen={isAddPlacePopupOpen}
+        title={'Новое место'}
+        name={'add-card'}
+        submitBtnText={'Создать'}
+        onClose={closeAllPopups}
+        children={(
+          <>
             <label>
               <input className="form__input" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required />
               <span className="form__input-error name-input-error"></span>
@@ -55,37 +110,22 @@ function App() {
               <input className="form__input" type="url" name="link" placeholder="Ссылка на картинку" required />
               <span className="form__input-error link-input-error"></span>
             </label>
-            <button className="form__submit-btn" type="submit" name="submit-btn">Создать</button>
-          </form>
-          <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
-        </div>
-      </dialog>
+          </>
+        )}
+      />
 
-      <dialog className="popup popup_content_photo">
-        <div className="popup__img-container">
-          <img className="popup__img" src="#" alt="" />
-          <span className="popup__img-heading"></span>
-          <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
-        </div>
-      </dialog>
+      <PopupWithForm
+        isOpen={false}
+        title={'Вы уверены?'}
+        name={'confirmation'}
+        submitBtnText={'Да'}
+        onClose={closeAllPopups}
+        children={''}
+      />
 
-      <dialog className="popup popup_content_confirmation">
-        <div className="popup__container">
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form className="form form_type_confirmation" action="#" name="confirmDelete" id="confirmDelete" noValidate>
-            <button className="form__submit-btn" type="submit" name="submit-btn">Да</button>
-          </form>
-          <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
-        </div>
-      </dialog>
+      <ImagePopup onClose={closeAllPopups}/>
+      <ErrorPopup onClose={closeAllPopups}/>
 
-      <dialog className="popup popup_content_notification">
-        <div className="popup__container popup__container_content_notification">
-          <h2 className="popup__title"> </h2>
-          <p className="popup__subtitle"></p>
-          <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
-        </div>
-      </dialog>
 
       <template className="card-template">
         <li className="card">
