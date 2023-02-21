@@ -2,9 +2,9 @@ import React from 'react';
 import defaultAvatar from '../images/avatar.png';
 import api from '../utils/api';
 import Card from './Cards';
-// import ErrorPopup from './ErrorPopup';
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
+
+function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
@@ -24,7 +24,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
             )
           ])
         })
-        .catch(err => console.log(err))
+        .catch(err => onError(err))
   }, [])
 
   return (

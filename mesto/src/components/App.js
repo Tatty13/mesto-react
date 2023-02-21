@@ -12,6 +12,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupState] = React.useState();
   const [isAddPlacePopupOpen, setAddPlacePopupState] = React.useState();
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false, name: '', link: ''});
+  const [error, setError] = React.useState({isOpen: false, errorText: ''});
 
   
   function handleEditAvatarClick() {
@@ -28,9 +29,16 @@ function App() {
 
   function handleCardClick({name, link}) {
     setSelectedCard({
-      isOpen: !selectedCard.isOpen,
+      isOpen: !error.isOpen,
       name,
       link
+    })
+  }
+
+  function handleErrorCatch(errorText) {
+    setError({
+      isOpen: !error.isOpen,
+      errorText
     })
   }
 
@@ -40,6 +48,7 @@ function App() {
     if (isEditProfilePopupOpen) setEditProfilePopupState(!isEditProfilePopupOpen);
     if (isAddPlacePopupOpen) setAddPlacePopupState(!isAddPlacePopupOpen);
     if (selectedCard.isOpen) setSelectedCard({isOpen: !selectedCard.isOpen});
+    if (error.isOpen) setError({isOpen: !error.isOpen});
   }
 
   function handleCloseAllPopups(evt) {
@@ -59,6 +68,7 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
+          onError={handleErrorCatch}
         />
         <Footer />
       </div>
@@ -130,7 +140,9 @@ function App() {
         card={selectedCard}
         onClose={handleCloseAllPopups}/>
 
-      <ErrorPopup onClose={handleCloseAllPopups}/>
+      <ErrorPopup
+        error={error}
+        onClose={handleCloseAllPopups}/>
     </>
   );
 }
