@@ -8,9 +8,9 @@ import ErrorPopup from './ErrorPopup';
 
 function App() {
   
-  const [isEditAvatarPopupOpen, setEditAvatarPopupState] = React.useState();
-  const [isEditProfilePopupOpen, setEditProfilePopupState] = React.useState();
-  const [isAddPlacePopupOpen, setAddPlacePopupState] = React.useState();
+  const [isEditAvatarPopupOpen, setEditAvatarPopupState] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupState] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupState] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false, name: '', link: ''});
   const [error, setError] = React.useState({isOpen: false, errorText: ''});
 
