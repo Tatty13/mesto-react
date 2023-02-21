@@ -1,11 +1,11 @@
-function ImagePopup({onClose}) {
+function ImagePopup({card, onClose}) {
 
   return (
-    <dialog className="popup popup_content_photo">
+    <dialog className={`popup popup_content_photo ${card.isOpen ? 'popup_open' : ''}`} onMouseDown={onClose}>
       <div className="popup__img-container">
-        <img className="popup__img" src="#" alt="" />
-        <span className="popup__img-heading"></span>
-        <button className="popup__close-btn" type="button" aria-label="Закрыть" onClick={onClose}></button>
+        <img className="popup__img" src={card.link} alt={card.name} />
+        <span className="popup__img-heading">{card.name}</span>
+        <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>
       </div>
     </dialog>
   )

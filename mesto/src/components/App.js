@@ -11,40 +11,42 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = React.useState();
   const [isEditProfilePopupOpen, setEditProfilePopupState] = React.useState();
   const [isAddPlacePopupOpen, setAddPlacePopupState] = React.useState();
+  const [selectedCard, setSelectedCard] = React.useState({isOpen: false, name: '', link: ''});
 
   
   function handleEditAvatarClick() {
     setEditAvatarPopupState(!isEditAvatarPopupOpen);
-    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleEditProfileClick() {
     setEditProfilePopupState(!isEditProfilePopupOpen);
-    document.addEventListener('keydown', handleEscClose);
   }
 
   function handleAddPlaceClick() {
     setAddPlacePopupState(!isAddPlacePopupOpen);
-    document.addEventListener('keydown', handleEscClose);
+  }
+
+  function handleCardClick({name, link}) {
+    setSelectedCard({
+      isOpen: !selectedCard.isOpen,
+      name,
+      link
+    })
   }
 
   /* -------------------------------------------- */
-  function closePopup(popup) {
-    document.removeEventListener('keydown', handleEscClose);
-    popup.classList.remove('popup_open');
+  function closeAllPopups() {
+    if (isEditAvatarPopupOpen) setEditAvatarPopupState(!isEditAvatarPopupOpen);
+    if (isEditProfilePopupOpen) setEditProfilePopupState(!isEditProfilePopupOpen);
+    if (isAddPlacePopupOpen) setAddPlacePopupState(!isAddPlacePopupOpen);
+    if (selectedCard.isOpen) setSelectedCard({isOpen: !selectedCard.isOpen});
   }
-  
-  function handleEscClose (evt) {
-    if (evt.code === 'Escape')
-    closePopup(document.querySelector('.popup_open'));
-  }
-  
-  function closeAllPopups(evt) {
+
+  function handleCloseAllPopups(evt) {
     const currentTarget = evt.target;
     const popup = currentTarget.closest('.popup');
-    if (currentTarget === popup || currentTarget.classList.contains('popup__close-btn')) {
-      closePopup(popup)
-    }
+    if (currentTarget === popup || currentTarget.classList.contains('popup__close-btn')) 
+      closeAllPopups();
   }
   /* -------------------------------------------- */
 
@@ -56,6 +58,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
       </div>
@@ -65,7 +68,7 @@ function App() {
         title={'Обновить аватар'}
         name={'edit-avatar'}
         submitBtnText={'Сохранить'}
-        onClose={closeAllPopups}
+        onClose={handleCloseAllPopups}
         children={(
           <label>
             <input className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
@@ -79,7 +82,7 @@ function App() {
         title={'Редактировать профиль'}
         name={'edit-profile'}
         submitBtnText={'Сохранить'}
-        onClose={closeAllPopups}
+        onClose={handleCloseAllPopups}
         children={(
           <>
             <label>
@@ -99,7 +102,7 @@ function App() {
         title={'Новое место'}
         name={'add-card'}
         submitBtnText={'Создать'}
-        onClose={closeAllPopups}
+        onClose={handleCloseAllPopups}
         children={(
           <>
             <label>
@@ -119,27 +122,15 @@ function App() {
         title={'Вы уверены?'}
         name={'confirmation'}
         submitBtnText={'Да'}
-        onClose={closeAllPopups}
+        onClose={handleCloseAllPopups}
         children={''}
       />
 
-      <ImagePopup onClose={closeAllPopups}/>
-      <ErrorPopup onClose={closeAllPopups}/>
+      <ImagePopup
+        card={selectedCard}
+        onClose={handleCloseAllPopups}/>
 
-
-      <template className="card-template">
-        <li className="card">
-          <div className="card__img-wrap">
-            <img className="card__img" src="#" alt="" />
-          </div>
-          <h2 className="card__title"> </h2>
-          <div className="card__like">
-            <button className="card__like-btn" type="button" aria-label="Нравится"></button>
-            <span className="card__like-count"></span>
-          </div>
-          <button className="card__delete-btn" type="button" aria-label="Удалить"></button>
-        </li>
-      </template>
+      <ErrorPopup onClose={handleCloseAllPopups}/>
     </>
   );
 }
