@@ -28,7 +28,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-wrap" onClick={onEditAvatar}>
-          <img className="profile__avatar" src={userAvatar ? userAvatar : defaultAvatar} alt="Аватар" />
+          <img className="profile__avatar" src={userAvatar || defaultAvatar} alt="Аватар" />
         </div>
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>

@@ -77,7 +77,6 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         title={'Обновить аватар'}
         name={'edit-avatar'}
-        submitBtnText={'Сохранить'}
         onClose={handleCloseAllPopups}
         children={(
           <label>
@@ -91,7 +90,6 @@ function App() {
         isOpen={isEditProfilePopupOpen}
         title={'Редактировать профиль'}
         name={'edit-profile'}
-        submitBtnText={'Сохранить'}
         onClose={handleCloseAllPopups}
         children={(
           <>
