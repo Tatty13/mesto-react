@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Tatty13/mesto-react/static/css/main.0d8597b4.css",
-    "main.js": "/Tatty13/mesto-react/static/js/main.f8f54282.js",
+    "main.css": "/Tatty13/mesto-react/static/css/main.856ef304.css",
+    "main.js": "/Tatty13/mesto-react/static/js/main.d54ec458.js",
     "static/js/787.7e45d085.chunk.js": "/Tatty13/mesto-react/static/js/787.7e45d085.chunk.js",
     "static/media/Inter-Medium.woff?v=3.19": "/Tatty13/mesto-react/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
     "static/media/Inter-Black.woff?v=3.19": "/Tatty13/mesto-react/static/media/Inter-Black.c6938660eec019fefd68.woff",
@@ -17,12 +17,12 @@
     "static/media/profile-pen.svg": "/Tatty13/mesto-react/static/media/profile-pen.6c7bf05444b9793fdf6e.svg",
     "static/media/popup-close-icon.svg": "/Tatty13/mesto-react/static/media/popup-close-icon.039f1f5203f653b4bacd.svg",
     "static/media/profile-plus.svg": "/Tatty13/mesto-react/static/media/profile-plus.bed8c136e13907f5eefb.svg",
-    "main.0d8597b4.css.map": "/Tatty13/mesto-react/static/css/main.0d8597b4.css.map",
-    "main.f8f54282.js.map": "/Tatty13/mesto-react/static/js/main.f8f54282.js.map",
+    "main.856ef304.css.map": "/Tatty13/mesto-react/static/css/main.856ef304.css.map",
+    "main.d54ec458.js.map": "/Tatty13/mesto-react/static/js/main.d54ec458.js.map",
     "787.7e45d085.chunk.js.map": "/Tatty13/mesto-react/static/js/787.7e45d085.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d8597b4.css",
-    "static/js/main.f8f54282.js"
+    "static/css/main.856ef304.css",
+    "static/js/main.d54ec458.js"
   ]
 }
