@@ -1,7 +1,21 @@
 {
   "name": "mesto",
   "version": "0.1.0",
-  "private": true,
+  "author": {
+    "name" : "Tatiana Ivanova",
+    "email" : "tat.mi.iva@gmail.com",
+    "url" : "https://github.com/Tatty13"
+  },
+  "description": "The study project that was made as part of the 'Web Developer' course from Yandex.Praktikum. This is a website where users can share photos",
+  "private": false,
+  "homepage": "https://github.com/Tatty13/mesto-react#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tatty13/mesto-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Tatty13/mesto-react/issues"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
