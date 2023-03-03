@@ -47,8 +47,8 @@ function App() {
     if (isEditAvatarPopupOpen) setEditAvatarPopupState(!isEditAvatarPopupOpen);
     if (isEditProfilePopupOpen) setEditProfilePopupState(!isEditProfilePopupOpen);
     if (isAddPlacePopupOpen) setAddPlacePopupState(!isAddPlacePopupOpen);
-    if (selectedCard.isOpen) setSelectedCard({isOpen: !selectedCard.isOpen});
-    if (error.isOpen) setError({isOpen: !error.isOpen});
+    if (selectedCard.isOpen) setSelectedCard({...selectedCard, isOpen: !selectedCard.isOpen});
+    if (error.isOpen) setError({...error, isOpen: !error.isOpen});
   }
 
   function handleCloseAllPopups(evt) {
