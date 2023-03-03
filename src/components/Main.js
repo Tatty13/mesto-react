@@ -18,10 +18,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
           setUserAvatar(avatar);
           setCards([
             ...cards,
-            ...cardsData.map(data => (
-              <Card card={data} key={data._id} onCardClick={onCardClick}/>
-              )
-            )
+            ...cardsData
           ])
         })
         .catch(err => onError(err))
@@ -41,7 +38,14 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
         <button className="profile__add-btn" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
       </section>
       <section className="cards" aria-label="Место">
-        <ul className="cards__list">{cards}</ul>
+        <ul className="cards__list">{cards.map(card => (
+          <Card 
+            key={card._id}
+            name={card.name}
+            link={card.link}
+            likesCount={card.likes.length}
+            onCardClick={onCardClick}/>
+        ))}</ul>
       </section>
     </main>
   )
