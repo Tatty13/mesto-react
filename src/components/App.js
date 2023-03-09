@@ -57,6 +57,14 @@ function App() {
       })
       .catch(err => handleErrorCatch(err))
   }
+
+  function handleCardDelete(cardId) {
+    api.deleteCard(cardId)
+      .then(_ => {
+        setCards(cards.filter(item => item._id !== cardId))
+      })
+      .catch(err => handleErrorCatch(err))
+  }
   
   useEffect(() => {
     api.getUserData()
@@ -97,6 +105,7 @@ function App() {
             onCardClick={handleCardClick}
             onError={handleErrorCatch}
             onLikeBtnClick={handleCardLike}
+            onDeleteBtnClick={handleCardDelete}
           />
           <Footer />
         </div>

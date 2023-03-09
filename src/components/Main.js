@@ -5,7 +5,7 @@ import api from '../utils/api';
 import Card from './Cards';
 
 
-function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError, onLikeBtnClick}) {
+function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError, onLikeBtnClick, onDeleteBtnClick}) {
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -13,7 +13,6 @@ function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardC
     api.getInitialCards()
       .then(cardsData => {
         setCards([
-          ...cards,
           ...cardsData
         ])
       })
@@ -35,7 +34,7 @@ function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardC
       </section>
       <section className="cards" aria-label="Место">
         <ul className="cards__list">{cards.map(card => (
-              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onLikeBtnClick}/>
+              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onLikeBtnClick} onDeleteBtnClick={onDeleteBtnClick}/>
               )
             )}</ul>
       </section>
