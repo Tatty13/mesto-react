@@ -1,15 +1,13 @@
-import {useState, useEffect, useContext} from 'react';
+import {useEffect, useContext} from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import defaultAvatar from '../images/avatar.png';
 import api from '../utils/api';
 import Card from './Cards';
 
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
+function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError, onLikeBtnClick}) {
 
   const currentUser = useContext(CurrentUserContext);
-
-  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api.getInitialCards()
@@ -20,7 +18,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
         ])
       })
       .catch(err => onError(err))
-}, [])
+  }, []);
 
   return (
     <main className="content">
@@ -37,7 +35,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
       </section>
       <section className="cards" aria-label="Место">
         <ul className="cards__list">{cards.map(card => (
-              <Card card={card} key={card._id} onCardClick={onCardClick}/>
+              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onLikeBtnClick}/>
               )
             )}</ul>
       </section>

@@ -16,7 +16,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({isOpen: false, name: '', link: ''});
   const [error, setError] = useState({isOpen: false, errorText: ''});
   const [currentUser, setCurrentUser] = useState({});
-
+  const [cards, setCards] = useState([]);
   
   function handleEditAvatarClick() {
     setEditAvatarPopupState(!isEditAvatarPopupOpen);
@@ -44,7 +44,19 @@ function App() {
       errorText
     })
   }
+  
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(user => user._id === currentUser._id);
+    const method = isLiked ? 'DELETE' : 'PUT';
 
+    api.toogleCardLike(card._id, method)
+      .then(updatedCard => {
+        setCards(
+          cards.map(item => item._id === updatedCard._id ? updatedCard : item)
+        )
+      })
+      .catch(err => handleErrorCatch(err))
+  }
   
   useEffect(() => {
     api.getUserData()
@@ -77,11 +89,14 @@ function App() {
         <div className="page__wrap">
           <Header />
           <Main
+            cards={cards}
+            setCards={setCards}
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
             onError={handleErrorCatch}
+            onLikeBtnClick={handleCardLike}
           />
           <Footer />
         </div>
