@@ -1,16 +1,16 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 import defaultAvatar from '../images/avatar.png';
 import api from '../utils/api';
 import Card from './Cards';
 
 
 function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  const [cards, setCards] = React.useState([]);
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
       Promise.all([api.getUserData(), api.getInitialCards()])
         .then(([{name, about, avatar}, cardsData]) => {
           setUserName(name);
@@ -18,10 +18,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
           setUserAvatar(avatar);
           setCards([
             ...cards,
-            ...cardsData.map(data => (
-              <Card card={data} key={data._id} onCardClick={onCardClick}/>
-              )
-            )
+            ...cardsData
           ])
         })
         .catch(err => onError(err))
@@ -31,7 +28,7 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
     <main className="content">
       <section className="profile">
         <div className="profile__avatar-wrap" onClick={onEditAvatar}>
-          <img className="profile__avatar" src={userAvatar ? userAvatar : defaultAvatar} alt="Аватар" />
+          <img className="profile__avatar" src={userAvatar || defaultAvatar} alt="Аватар" />
         </div>
         <div className="profile__info">
           <h1 className="profile__name">{userName}</h1>
@@ -41,7 +38,10 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError}) {
         <button className="profile__add-btn" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
       </section>
       <section className="cards" aria-label="Место">
-        <ul className="cards__list">{cards}</ul>
+        <ul className="cards__list">{cards.map(card => (
+              <Card card={card} key={card._id} onCardClick={onCardClick}/>
+              )
+            )}</ul>
       </section>
     </main>
   )

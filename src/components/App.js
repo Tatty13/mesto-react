@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -8,11 +8,11 @@ import ErrorPopup from './ErrorPopup';
 
 function App() {
   
-  const [isEditAvatarPopupOpen, setEditAvatarPopupState] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupState] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupState] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({isOpen: false, name: '', link: ''});
-  const [error, setError] = React.useState({isOpen: false, errorText: ''});
+  const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupState] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupState] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({isOpen: false, name: '', link: ''});
+  const [error, setError] = useState({isOpen: false, errorText: ''});
 
   
   function handleEditAvatarClick() {
@@ -47,8 +47,8 @@ function App() {
     if (isEditAvatarPopupOpen) setEditAvatarPopupState(!isEditAvatarPopupOpen);
     if (isEditProfilePopupOpen) setEditProfilePopupState(!isEditProfilePopupOpen);
     if (isAddPlacePopupOpen) setAddPlacePopupState(!isAddPlacePopupOpen);
-    if (selectedCard.isOpen) setSelectedCard({isOpen: !selectedCard.isOpen});
-    if (error.isOpen) setError({isOpen: !error.isOpen});
+    if (selectedCard.isOpen) setSelectedCard({...selectedCard, isOpen: !selectedCard.isOpen});
+    if (error.isOpen) setError({...error, isOpen: !error.isOpen});
   }
 
   function handleCloseAllPopups(evt) {
@@ -77,7 +77,6 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         title={'Обновить аватар'}
         name={'edit-avatar'}
-        submitBtnText={'Сохранить'}
         onClose={handleCloseAllPopups}
         children={(
           <label>
@@ -91,7 +90,6 @@ function App() {
         isOpen={isEditProfilePopupOpen}
         title={'Редактировать профиль'}
         name={'edit-profile'}
-        submitBtnText={'Сохранить'}
         onClose={handleCloseAllPopups}
         children={(
           <>
