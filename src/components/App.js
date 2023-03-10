@@ -64,7 +64,7 @@ function App() {
           cards.map(item => item._id === updatedCard._id ? updatedCard : item)
         )
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }
 
   function handleCardDelete(cardId) {
@@ -72,7 +72,7 @@ function App() {
       .then(_ => {
         setCards(cards.filter(item => item._id !== cardId))
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }
 
   function handleUpdateUser(userData) {
@@ -81,7 +81,7 @@ function App() {
         setCurrentUser(updatedUserInfo);
         closeAllPopups();
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }
 
   function handleUpdateAvatar(avatarData) {
@@ -90,7 +90,7 @@ function App() {
         setCurrentUser(updatedUserInfo);
         closeAllPopups();
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }
 
   function handleAddPlaceSubmit(cardData) {
@@ -102,7 +102,7 @@ function App() {
         ]);
         closeAllPopups();
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }
   
   useEffect(() => {
@@ -110,7 +110,7 @@ function App() {
       .then(user => {
         setCurrentUser(user);
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }, []);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ function App() {
           ...cardsData
         ])
       })
-      .catch(err => handleErrorCatch(err))
+      .catch(handleErrorCatch)
   }, []);
 
   /* -------------------------------------------- */
