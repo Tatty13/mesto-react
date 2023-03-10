@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import ErrorPopup from './ErrorPopup';
 import api from '../utils/api';
@@ -91,11 +92,33 @@ function App() {
       })
       .catch(err => handleErrorCatch(err))
   }
+
+  function handleAddPlaceSubmit(cardData) {
+    api.addCard(cardData)
+      .then(newCard => {
+        setCards([
+          newCard,
+          ...cards
+        ]);
+        closeAllPopups();
+      })
+      .catch(err => handleErrorCatch(err))
+  }
   
   useEffect(() => {
     api.getUserData()
       .then(user => {
         setCurrentUser(user);
+      })
+      .catch(err => handleErrorCatch(err))
+  }, []);
+
+  useEffect(() => {
+    api.getInitialCards()
+      .then(cardsData => {
+        setCards([
+          ...cardsData
+        ])
       })
       .catch(err => handleErrorCatch(err))
   }, []);
@@ -124,14 +147,12 @@ function App() {
           <Header />
           <Main
             cards={cards}
-            setCards={setCards}
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
-            onError={handleErrorCatch}
-            onLikeBtnClick={handleCardLike}
-            onDeleteBtnClick={handleCardDelete}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
           <Footer />
         </div>
@@ -149,24 +170,10 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
-        <PopupWithForm
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
-          title={'Новое место'}
-          name={'add-card'}
-          submitBtnText={'Создать'}
           onClose={handleCloseAllPopups}
-          children={(
-            <>
-              <label>
-                <input className="form__input" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required />
-                <span className="form__input-error name-input-error"></span>
-              </label>
-              <label>
-                <input className="form__input" type="url" name="link" placeholder="Ссылка на картинку" required />
-                <span className="form__input-error link-input-error"></span>
-              </label>
-            </>
-          )}
+          onAddPlace={handleAddPlaceSubmit}
         />
 
         <PopupWithForm

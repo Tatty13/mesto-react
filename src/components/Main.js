@@ -1,23 +1,12 @@
-import {useEffect, useContext} from 'react';
+import { useContext } from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import defaultAvatar from '../images/avatar.png';
-import api from '../utils/api';
 import Card from './Cards';
 
 
-function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onError, onLikeBtnClick, onDeleteBtnClick}) {
+function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete}) {
 
   const currentUser = useContext(CurrentUserContext);
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then(cardsData => {
-        setCards([
-          ...cardsData
-        ])
-      })
-      .catch(err => onError(err))
-  }, []);
 
   return (
     <main className="content">
@@ -34,7 +23,7 @@ function Main({cards, setCards, onEditAvatar, onEditProfile, onAddPlace, onCardC
       </section>
       <section className="cards" aria-label="Место">
         <ul className="cards__list">{cards.map(card => (
-              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onLikeBtnClick} onDeleteBtnClick={onDeleteBtnClick}/>
+              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onCardLike} onDeleteBtnClick={onCardDelete}/>
               )
             )}</ul>
       </section>
