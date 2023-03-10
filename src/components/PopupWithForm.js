@@ -1,10 +1,10 @@
-function PopupWithForm({isOpen, title, name, submitBtnText, children, onClose}) {
+function PopupWithForm({isOpen, title, name, submitBtnText, children, onClose, onSubmit}) {
   
   return (
     <dialog className={`popup popup_content_${name} ${isOpen ? 'popup_open' : ''}`} onMouseDown={onClose}>
       <div className="popup__container">
         <h2 className="popup__title">{title}</h2>
-        <form className={`form form_type_${name}`} action="#" name={name} id={name} noValidate>
+        <form className={`form form_type_${name}`} action="#" name={name} id={name} onSubmit={onSubmit} noValidate>
           {children}
           <button className="form__submit-btn" type="submit" name="submit-btn">{submitBtnText || 'Сохранить'}</button>
         </form>

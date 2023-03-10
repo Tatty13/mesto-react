@@ -1,9 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import ErrorPopup from './ErrorPopup';
 import api from '../utils/api';
@@ -17,8 +19,14 @@ function App() {
   const [error, setError] = useState({isOpen: false, errorText: ''});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+
+  /**
+   * set avatar ref in App to clear input on opening avatarPopup
+   */
+  const avatarRef = useRef();
   
   function handleEditAvatarClick() {
+    avatarRef.current.value = '';
     setEditAvatarPopupState(!isEditAvatarPopupOpen);
   }
 
@@ -62,6 +70,24 @@ function App() {
     api.deleteCard(cardId)
       .then(_ => {
         setCards(cards.filter(item => item._id !== cardId))
+      })
+      .catch(err => handleErrorCatch(err))
+  }
+
+  function handleUpdateUser(userData) {
+    api.setUserData(userData)
+      .then(updatedUserInfo => {
+        setCurrentUser(updatedUserInfo);
+        closeAllPopups();
+      })
+      .catch(err => handleErrorCatch(err))
+  }
+
+  function handleUpdateAvatar(avatarData) {
+    api.updateAvatar(avatarData)
+      .then(updatedUserInfo => {
+        setCurrentUser(updatedUserInfo);
+        closeAllPopups();
       })
       .catch(err => handleErrorCatch(err))
   }
@@ -110,36 +136,17 @@ function App() {
           <Footer />
         </div>
 
-        <PopupWithForm
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
-          title={'Обновить аватар'}
-          name={'edit-avatar'}
           onClose={handleCloseAllPopups}
-          children={(
-            <label>
-              <input className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
-              <span className="form__input-error avatar-input-error"></span>
-            </label>
-          )}
+          onUpdateAvatar={handleUpdateAvatar}
+          avatarRef={avatarRef}
         />
-
-        <PopupWithForm
+        
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
-          title={'Редактировать профиль'}
-          name={'edit-profile'}
           onClose={handleCloseAllPopups}
-          children={(
-            <>
-              <label>
-                <input className="form__input" type="text" name="name" placeholder="Введите имя" minLength="2" maxLength="40" required />
-                <span className="form__input-error name-input-error"></span>
-              </label>
-              <label>
-                <input className="form__input" type="text" name="about" minLength="2" maxLength="200" placeholder="Введите род деятельности" required />
-                <span className="form__input-error about-input-error"></span>
-              </label>
-            </>
-          )}
+          onUpdateUser={handleUpdateUser}
         />
 
         <PopupWithForm
