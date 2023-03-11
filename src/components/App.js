@@ -17,7 +17,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupState] = useState(false);
   const [selectedCard, setSelectedCard] = useState({isOpen: false, name: '', link: ''});
   const [error, setError] = useState({isOpen: false, errorText: ''});
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({name: '', about: ''});
   const [cards, setCards] = useState([]);
 
   /**
@@ -32,7 +32,6 @@ function App() {
       errorText
     })
   }, []);
-
 
   /**
    * set avatar ref in App to clear input on opening avatarPopup
