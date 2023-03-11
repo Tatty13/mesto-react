@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState, useRef, useCallback} from 'react';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Main from './Main';
@@ -12,7 +12,6 @@ import ErrorPopup from './ErrorPopup';
 import api from '../utils/api';
 
 function App() {
-  
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupState] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupState] = useState(false);
@@ -20,6 +19,13 @@ function App() {
   const [error, setError] = useState({isOpen: false, errorText: ''});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+
+  const handleErrorCatch = useCallback(errorText => {
+    setError({
+      isOpen: true,
+      errorText
+    })
+  }, []);
 
   /**
    * set avatar ref in App to clear input on opening avatarPopup
@@ -44,13 +50,6 @@ function App() {
       isOpen: !error.isOpen,
       name,
       link
-    })
-  }
-
-  function handleErrorCatch(errorText) {
-    setError({
-      isOpen: !error.isOpen,
-      errorText
     })
   }
   
@@ -106,22 +105,15 @@ function App() {
   }
   
   useEffect(() => {
-    api.getUserData()
-      .then(user => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([user, cardsData]) => {
         setCurrentUser(user);
-      })
-      .catch(handleErrorCatch)
-  }, []);
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then(cardsData => {
         setCards([
           ...cardsData
-        ])
+        ]);
       })
       .catch(handleErrorCatch)
-  }, []);
+  }, [handleErrorCatch]);
 
   /* -------------------------------------------- */
   function closeAllPopups() {
