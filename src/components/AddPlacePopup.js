@@ -1,10 +1,8 @@
-import { useState } from "react";
+// import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
+function AddPlacePopup({ isOpen, onClose, onAddPlace, cardData}) {
+  const {name, link, setCardName, setCardLink} = cardData;
 
   function handleInputChange(evt, setInputValue) {
     setInputValue(evt.target.value);
@@ -12,7 +10,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddPlace({name, link})
+    onAddPlace({name, link});
   }
 
   return (
@@ -26,11 +24,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       children={(
         <>
           <label>
-            <input className="form__input" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" value={name} onChange={evt => handleInputChange(evt, setName)} required />
+            <input className="form__input" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" value={name} onChange={evt => handleInputChange(evt, setCardName)} required />
             <span className="form__input-error name-input-error"></span>
           </label>
           <label>
-            <input className="form__input" type="url" name="link" placeholder="Ссылка на картинку" value={link} onChange={evt => handleInputChange(evt, setLink)} required />
+            <input className="form__input" type="url" name="link" placeholder="Ссылка на картинку" value={link} onChange={evt => handleInputChange(evt, setCardLink)} required />
             <span className="form__input-error link-input-error"></span>
           </label>
         </>

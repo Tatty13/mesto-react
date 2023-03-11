@@ -20,6 +20,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
+  /**
+   * set card data in App to clear AddPlacePopup inputs on opening AddPlacePopup
+   */
+  const [cardName, setCardName] = useState('');
+  const [cardLink, setCardLink] = useState('');
+
   const handleErrorCatch = useCallback(errorText => {
     setError({
       isOpen: true,
@@ -27,7 +33,7 @@ function App() {
     })
   }, []);
 
-  
+
   /**
    * set avatar ref in App to clear input on opening avatarPopup
    */
@@ -43,6 +49,8 @@ function App() {
   }
 
   function handleAddPlaceClick() {
+    setCardName('');
+    setCardLink('');
     setAddPlacePopupState(!isAddPlacePopupOpen);
   }
 
@@ -167,6 +175,7 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={handleCloseAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          cardData={{name: cardName, link: cardLink, setCardName, setCardLink}}
         />
 
         <PopupWithForm
