@@ -27,6 +27,7 @@ function App() {
     })
   }, []);
 
+  
   /**
    * set avatar ref in App to clear input on opening avatarPopup
    */
