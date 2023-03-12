@@ -40,22 +40,22 @@ function App() {
   
   function handleEditAvatarClick() {
     avatarRef.current.value = '';
-    setEditAvatarPopupState(!isEditAvatarPopupOpen);
+    setEditAvatarPopupState(true);
   }
 
   function handleEditProfileClick() {
-    setEditProfilePopupState(!isEditProfilePopupOpen);
+    setEditProfilePopupState(true);
   }
 
   function handleAddPlaceClick() {
     setCardName('');
     setCardLink('');
-    setAddPlacePopupState(!isAddPlacePopupOpen);
+    setAddPlacePopupState(true);
   }
 
   function handleCardClick({name, link}) {
     setSelectedCard({
-      isOpen: !error.isOpen,
+      isOpen: true,
       name,
       link
     })
@@ -125,11 +125,11 @@ function App() {
 
   /* -------------------------------------------- */
   function closeAllPopups() {
-    if (isEditAvatarPopupOpen) setEditAvatarPopupState(!isEditAvatarPopupOpen);
-    if (isEditProfilePopupOpen) setEditProfilePopupState(!isEditProfilePopupOpen);
-    if (isAddPlacePopupOpen) setAddPlacePopupState(!isAddPlacePopupOpen);
-    if (selectedCard.isOpen) setSelectedCard({...selectedCard, isOpen: !selectedCard.isOpen});
-    if (error.isOpen) setError({...error, isOpen: !error.isOpen});
+    if (isEditAvatarPopupOpen) setEditAvatarPopupState(false);
+    if (isEditProfilePopupOpen) setEditProfilePopupState(false);
+    if (isAddPlacePopupOpen) setAddPlacePopupState(false);
+    if (selectedCard.isOpen) setSelectedCard({...selectedCard, isOpen: false});
+    if (error.isOpen) setError({...error, isOpen: false});
   }
 
   function handleCloseAllPopups(evt) {
