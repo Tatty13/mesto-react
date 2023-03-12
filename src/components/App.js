@@ -70,6 +70,10 @@ function App() {
   }
 
   function handleEditProfileClick() {
+    /**
+     * to display user info if the popup was closed with empty inputs
+     */
+    setCurrentUser({...currentUser});
     setEditProfilePopupState(true);
   }
 
