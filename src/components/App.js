@@ -3,10 +3,10 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
 import ImagePopup from './ImagePopup';
 import ErrorPopup from './ErrorPopup';
 import api from '../utils/api';
@@ -15,8 +15,11 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupState] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupState] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({isOpen: false, name: '', link: ''});
-  const [error, setError] = useState({isOpen: false, errorText: ''});
+  const [isImagePopupOpen, setImagePopupState] = useState(false);
+  const [isDeleteCardPopupOpen, setDeleteCardPopupState] = useState(false);
+  const [isErrorPopupOpen, setErrorPopupState] = useState(false);
+  const [errorText, setErrorText] = useState('');
+  const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
   const [currentUser, setCurrentUser] = useState({name: '', about: ''});
   const [cards, setCards] = useState([]);
 
@@ -26,11 +29,33 @@ function App() {
   const [cardName, setCardName] = useState('');
   const [cardLink, setCardLink] = useState('');
 
-  const handleErrorCatch = useCallback(errorText => {
-    setError({
-      isOpen: true,
-      errorText
+  /* -------------------------------------------- */
+  const popupsState = [
+    {state: isEditAvatarPopupOpen, setter: setEditAvatarPopupState}, 
+    {state: isEditProfilePopupOpen, setter: setEditProfilePopupState},
+    {state: isAddPlacePopupOpen, setter: setAddPlacePopupState},
+    {state: isImagePopupOpen, setter: setImagePopupState},
+    {state: isDeleteCardPopupOpen, setter: setDeleteCardPopupState},
+    {state: isErrorPopupOpen, setter: setErrorPopupState},
+  ];
+
+  function closeAllPopups() {
+    popupsState.forEach(popup => {
+      if (popup.state) popup.setter(false);
     })
+  }
+
+  function handleCloseAllPopups(evt) {
+    const currentTarget = evt.target;
+    const popup = currentTarget.closest('.popup');
+    if (currentTarget === popup || currentTarget.classList.contains('popup__close-btn')) 
+      closeAllPopups();
+  }
+  /* -------------------------------------------- */
+
+  const handleErrorCatch = useCallback(errorText => {
+    setErrorPopupState(true);
+    setErrorText(errorText);
   }, []);
 
   /**
@@ -55,10 +80,10 @@ function App() {
 
   function handleCardClick({name, link}) {
     setSelectedCard({
-      isOpen: true,
       name,
       link
     })
+    setImagePopupState(true)
   }
   
   function handleCardLike(card) {
@@ -74,10 +99,16 @@ function App() {
       .catch(handleErrorCatch)
   }
 
+  function handleDeleteCardPopupOpen(cardId) {
+    setSelectedCard({id: cardId})
+    setDeleteCardPopupState(true);
+  }
+
   function handleCardDelete(cardId) {
     api.deleteCard(cardId)
       .then(_ => {
-        setCards(cards.filter(item => item._id !== cardId))
+        setCards(cards.filter(item => item._id !== cardId));
+        closeAllPopups();
       })
       .catch(handleErrorCatch)
   }
@@ -123,23 +154,6 @@ function App() {
       .catch(handleErrorCatch)
   }, [handleErrorCatch]);
 
-  /* -------------------------------------------- */
-  function closeAllPopups() {
-    if (isEditAvatarPopupOpen) setEditAvatarPopupState(false);
-    if (isEditProfilePopupOpen) setEditProfilePopupState(false);
-    if (isAddPlacePopupOpen) setAddPlacePopupState(false);
-    if (selectedCard.isOpen) setSelectedCard({...selectedCard, isOpen: false});
-    if (error.isOpen) setError({...error, isOpen: false});
-  }
-
-  function handleCloseAllPopups(evt) {
-    const currentTarget = evt.target;
-    const popup = currentTarget.closest('.popup');
-    if (currentTarget === popup || currentTarget.classList.contains('popup__close-btn')) 
-      closeAllPopups();
-  }
-  /* -------------------------------------------- */
-
   return (
     <CurrentUserContext.Provider value={currentUser} >
       <>
@@ -152,7 +166,7 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onDeleteBtnClick={handleDeleteCardPopupOpen}
           />
           <Footer />
         </div>
@@ -177,21 +191,21 @@ function App() {
           cardData={{name: cardName, link: cardLink, setCardName, setCardLink}}
         />
 
-        <PopupWithForm
-          isOpen={false}
-          title={'Вы уверены?'}
-          name={'confirmation'}
-          submitBtnText={'Да'}
+        <DeleteCardPopup
+          isOpen={isDeleteCardPopupOpen}
           onClose={handleCloseAllPopups}
-          children={''}
+          onDeleteConfirm={handleCardDelete}
+          card={selectedCard}
         />
 
         <ImagePopup
+          isOpen={isImagePopupOpen}
           card={selectedCard}
           onClose={handleCloseAllPopups}/>
 
         <ErrorPopup
-          error={error}
+          error={errorText}
+          isOpen={isErrorPopupOpen}
           onClose={handleCloseAllPopups}/>
       </>
     </CurrentUserContext.Provider>

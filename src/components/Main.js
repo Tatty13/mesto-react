@@ -4,7 +4,7 @@ import defaultAvatar from '../images/avatar.png';
 import Card from './Cards';
 
 
-function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete}) {
+function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onDeleteBtnClick}) {
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -23,7 +23,7 @@ function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCa
       </section>
       <section className="cards" aria-label="Место">
         <ul className="cards__list">{cards.map(card => (
-              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onCardLike} onDeleteBtnClick={onCardDelete}/>
+              <Card card={card} key={card._id} onCardClick={onCardClick} onLikeBtnClick={onCardLike} onDeleteBtnClick={onDeleteBtnClick}/>
               )
             )}</ul>
       </section>

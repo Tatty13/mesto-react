@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, cardData}) {
