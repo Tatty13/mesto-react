@@ -1,6 +1,6 @@
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, avatarRef}) {
+function EditAvatarPopup({isOpen, isLoading, onClose, onUpdateAvatar, avatarRef}) {
 
   function onSubmit(evt) {
     evt.preventDefault();
@@ -10,6 +10,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar, avatarRef}) {
   return (
     <PopupWithForm
       isOpen={isOpen}
+      isLoading={isLoading}
       onClose={onClose}
       onSubmit={onSubmit}
       title={'Обновить аватар'}

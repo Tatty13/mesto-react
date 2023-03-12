@@ -22,7 +22,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
   const [currentUser, setCurrentUser] = useState({name: '', about: ''});
   const [cards, setCards] = useState([]);
-
+  const [isLoading, setLoading] = useState(false);
+  
   /**
    * set card data in App to clear AddPlacePopup inputs on opening AddPlacePopup
    */
@@ -100,38 +101,45 @@ function App() {
   }
 
   function handleDeleteCardPopupOpen(cardId) {
-    setSelectedCard({id: cardId})
+    setSelectedCard({id: cardId});
     setDeleteCardPopupState(true);
   }
 
   function handleCardDelete(cardId) {
+    setLoading(true);
     api.deleteCard(cardId)
       .then(_ => {
         setCards(cards.filter(item => item._id !== cardId));
         closeAllPopups();
       })
       .catch(handleErrorCatch)
+      .finally(setLoading(false))
   }
 
   function handleUpdateUser(userData) {
+    setLoading(true);
     api.setUserData(userData)
       .then(updatedUserInfo => {
         setCurrentUser(updatedUserInfo);
         closeAllPopups();
       })
       .catch(handleErrorCatch)
+      .finally(setLoading(false))
   }
 
   function handleUpdateAvatar(avatarData) {
+    setLoading(true);
     api.updateAvatar(avatarData)
       .then(updatedUserInfo => {
         setCurrentUser(updatedUserInfo);
         closeAllPopups();
       })
       .catch(handleErrorCatch)
+      .finally(setLoading(false))
   }
 
   function handleAddPlaceSubmit(cardData) {
+    setLoading(true);
     api.addCard(cardData)
       .then(newCard => {
         setCards([
@@ -141,6 +149,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
+      .finally(setLoading(false))
   }
   
   useEffect(() => {
@@ -173,6 +182,7 @@ function App() {
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
+          isLoading={isLoading}
           onClose={handleCloseAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           avatarRef={avatarRef}
@@ -180,12 +190,14 @@ function App() {
         
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
+          isLoading={isLoading}
           onClose={handleCloseAllPopups}
           onUpdateUser={handleUpdateUser}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
+          isLoading={isLoading}
           onClose={handleCloseAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           cardData={{name: cardName, link: cardLink, setCardName, setCardLink}}
@@ -193,6 +205,7 @@ function App() {
 
         <DeleteCardPopup
           isOpen={isDeleteCardPopupOpen}
+          isLoading={isLoading}
           onClose={handleCloseAllPopups}
           onDeleteConfirm={handleCardDelete}
           card={selectedCard}

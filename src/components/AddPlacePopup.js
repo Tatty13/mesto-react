@@ -1,6 +1,6 @@
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace, cardData}) {
+function AddPlacePopup({ isOpen, isLoading, onClose, onAddPlace, cardData}) {
   const {name, link, setCardName, setCardLink} = cardData;
 
   function handleInputChange(evt, setInputValue) {
@@ -15,6 +15,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, cardData}) {
   return (
     <PopupWithForm
       isOpen={isOpen}
+      isLoading={isLoading}
       onClose={onClose}
       onSubmit={handleSubmit}
       title={'Новое место'}
