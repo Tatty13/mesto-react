@@ -18,9 +18,9 @@ function AddPlacePopup({ isOpen, isLoading, onClose, onAddPlace, cardData}) {
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={handleSubmit}
-      title={'Новое место'}
-      name={'add-card'}
-      submitBtnText={'Создать'}
+      title='Новое место'
+      name='add-card'
+      submitBtnText='Создать'
       children={(
         <>
           <label>

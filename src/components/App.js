@@ -87,8 +87,8 @@ function App() {
     setSelectedCard({
       name,
       link
-    })
-    setImagePopupState(true)
+    });
+    setImagePopupState(true);
   }
   
   function handleCardLike(card) {
@@ -101,7 +101,7 @@ function App() {
           cards.map(item => item._id === updatedCard._id ? updatedCard : item)
         )
       })
-      .catch(handleErrorCatch)
+      .catch(handleErrorCatch);
   }
 
   function handleDeleteCardPopupOpen(cardId) {
@@ -117,7 +117,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false))
+      .finally(setLoading(false));
   }
 
   function handleUpdateUser(userData) {
@@ -128,7 +128,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false))
+      .finally(setLoading(false));
   }
 
   function handleUpdateAvatar(avatarData) {
@@ -139,7 +139,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false))
+      .finally(setLoading(false));
   }
 
   function handleAddPlaceSubmit(cardData) {
@@ -153,7 +153,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false))
+      .finally(setLoading(false));
   }
   
   useEffect(() => {
@@ -164,7 +164,7 @@ function App() {
           ...cardsData
         ]);
       })
-      .catch(handleErrorCatch)
+      .catch(handleErrorCatch);
   }, [handleErrorCatch]);
 
   return (

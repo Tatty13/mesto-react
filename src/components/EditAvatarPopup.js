@@ -13,8 +13,8 @@ function EditAvatarPopup({isOpen, isLoading, onClose, onUpdateAvatar, avatarRef}
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={onSubmit}
-      title={'Обновить аватар'}
-      name={'edit-avatar'}
+      title='Обновить аватар'
+      name='edit-avatar'
       children={(
         <label>
           <input ref={avatarRef} className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />

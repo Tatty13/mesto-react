@@ -7,7 +7,7 @@ function PopupWithForm({isOpen, isLoading, title, name, submitBtnText, loadingTe
         <form className={`form form_type_${name}`} action="#" name={name} id={name} onSubmit={onSubmit} noValidate>
           {children}
           <button className="form__submit-btn" type="submit" name="submit-btn">{isLoading 
-            ? (loadingText || 'Созранение...')
+            ? (loadingText || 'Сохранение...')
             : (submitBtnText || 'Сохранить')}</button>
         </form>
         <button className="popup__close-btn" type="button" aria-label="Закрыть"></button>

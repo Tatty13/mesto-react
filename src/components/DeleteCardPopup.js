@@ -13,11 +13,11 @@ function DeleteCardPopup({isOpen, isLoading, onClose, onDeleteConfirm, card}) {
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={handleSubmit}
-      title={'Вы уверены?'}
-      name={'confirmation'}
-      submitBtnText={'Да'}
+      title='Вы уверены?'
+      name='confirmation'
+      submitBtnText='Да'
       loadingText='Удаление...'
-      children={''}
+      children=''
     />
   )
 }
