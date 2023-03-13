@@ -17,7 +17,6 @@ function DeleteCardPopup({isOpen, isLoading, onClose, onDeleteConfirm, card}) {
       name='confirmation'
       submitBtnText='Да'
       loadingText='Удаление...'
-      children=''
     />
   )
 }
