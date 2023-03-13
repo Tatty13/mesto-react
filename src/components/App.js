@@ -24,6 +24,14 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isLoading, setLoading] = useState(false);
   
+  // const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
+
+  // function handleEscClose(evt) {
+  //   if (evt.code === 'Escape') {
+  //     closeAllPopups();
+  //   }
+  // }
+
   /**
    * set card data in App to clear AddPlacePopup inputs on opening AddPlacePopup
    */
@@ -40,7 +48,18 @@ function App() {
     {state: isErrorPopupOpen, setter: setErrorPopupState},
   ];
 
+  function handleEscClose(evt) {
+    if (evt.code === 'Escape') {
+      closeAllPopups();
+    }
+  }
+
+  useEffect(() => {
+    popupsState.some(({state}) => state === true) && document.addEventListener('keydown', handleEscClose);
+  })
+
   function closeAllPopups() {
+    document.removeEventListener('keydown', handleEscClose);
     popupsState.forEach(popup => {
       if (popup.state) popup.setter(false);
     })
