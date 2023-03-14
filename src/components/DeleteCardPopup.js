@@ -1,6 +1,6 @@
 import PopupWithForm from "./PopupWithForm";
 
-function DeleteCardPopup({isOpen, isLoading, onClose, onDeleteConfirm, card}) {
+function DeleteCardPopup({ isOpen, isLoading, onClose, onDeleteConfirm, card }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -13,12 +13,12 @@ function DeleteCardPopup({isOpen, isLoading, onClose, onDeleteConfirm, card}) {
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={handleSubmit}
-      title='Вы уверены?'
-      name='confirmation'
-      submitBtnText='Да'
-      loadingText='Удаление...'
+      title="Вы уверены?"
+      name="confirmation"
+      submitBtnText="Да"
+      loadingText="Удаление..."
     />
-  )
+  );
 }
 
 export default DeleteCardPopup;

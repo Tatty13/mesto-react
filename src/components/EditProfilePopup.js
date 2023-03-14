@@ -17,8 +17,8 @@ function EditProfilePopup({ isOpen, isLoading, onClose, onUpdateUser }) {
     evt.preventDefault();
     onUpdateUser({
       name,
-      about: description
-    })
+      about: description,
+    });
   }
 
   return (
@@ -27,21 +27,40 @@ function EditProfilePopup({ isOpen, isLoading, onClose, onUpdateUser }) {
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={handleSubmit}
-      title='Редактировать профиль'
-      name='edit-profile'
-    >
+      title="Редактировать профиль"
+      name="edit-profile">
       <>
         <label>
-          <input className="form__input" type="text" name="name" placeholder="Введите имя" minLength="2" maxLength="40" value={name} onChange={evt => handleInputChange(evt, setName)} required />
+          <input
+            className="form__input"
+            type="text"
+            name="name"
+            placeholder="Введите имя"
+            minLength="2"
+            maxLength="40"
+            value={name}
+            onChange={evt => handleInputChange(evt, setName)}
+            required
+          />
           <span className="form__input-error name-input-error"></span>
         </label>
         <label>
-          <input className="form__input" type="text" name="about" minLength="2" maxLength="200" placeholder="Введите род деятельности" value={description} onChange={evt => handleInputChange(evt, setDescription)} required />
+          <input
+            className="form__input"
+            type="text"
+            name="about"
+            minLength="2"
+            maxLength="200"
+            placeholder="Введите род деятельности"
+            value={description}
+            onChange={evt => handleInputChange(evt, setDescription)}
+            required
+          />
           <span className="form__input-error about-input-error"></span>
         </label>
       </>
     </PopupWithForm>
-  )
+  );
 }
 
 export default EditProfilePopup;

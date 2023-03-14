@@ -1,10 +1,10 @@
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({isOpen, isLoading, onClose, onUpdateAvatar, avatarRef}) {
-
+function EditAvatarPopup({ isOpen, isLoading, onClose, onUpdateAvatar, avatarRef }) {
+  
   function onSubmit(evt) {
     evt.preventDefault();
-    onUpdateAvatar({avatar: avatarRef.current.value});
+    onUpdateAvatar({ avatar: avatarRef.current.value });
   }
 
   return (
@@ -13,15 +13,21 @@ function EditAvatarPopup({isOpen, isLoading, onClose, onUpdateAvatar, avatarRef}
       isLoading={isLoading}
       onClose={onClose}
       onSubmit={onSubmit}
-      title='Обновить аватар'
-      name='edit-avatar'
-    >
+      title="Обновить аватар"
+      name="edit-avatar">
       <label>
-        <input ref={avatarRef} className="form__input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
+        <input
+          ref={avatarRef}
+          className="form__input"
+          type="url"
+          name="avatar"
+          placeholder="Ссылка на картинку"
+          required
+        />
         <span className="form__input-error avatar-input-error"></span>
       </label>
     </PopupWithForm>
-  )
+  );
 }
 
 export default EditAvatarPopup;
