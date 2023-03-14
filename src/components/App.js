@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
@@ -24,12 +24,6 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  /**
-   * set card data in App to clear AddPlacePopup inputs on opening AddPlacePopup
-   */
-  const [cardName, setCardName] = useState("");
-  const [cardLink, setCardLink] = useState("");
-
   /* -------------------------------------------- */
   const popupsState = useMemo(
     () => [
@@ -54,19 +48,16 @@ function App() {
     popupsState.forEach(popup => popup.state && popup.setter(false));
   }, [popupsState]);
 
-  const handleEscClose = useCallback(
-    evt => evt.code === "Escape" && closeAllPopups(),
-    [closeAllPopups]
-  );
-
   useEffect(() => {
+    const handleEscClose = evt => evt.code === "Escape" && closeAllPopups();
+
     popupsState.some(({ state }) => state === true) &&
       document.addEventListener("keydown", handleEscClose);
 
     return () => {
       document.removeEventListener("keydown", handleEscClose);
     };
-  }, [popupsState, handleEscClose]);
+  }, [popupsState, closeAllPopups]);
 
   function handleCloseAllPopups(evt) {
     const currentTarget = evt.target;
@@ -84,27 +75,15 @@ function App() {
     setErrorText(errorText);
   }, []);
 
-  /**
-   * set avatar ref in App to clear input on opening avatarPopup
-   */
-  const avatarRef = useRef();
-
   function handleEditAvatarClick() {
-    avatarRef.current.value = "";
     setEditAvatarPopupState(true);
   }
 
   function handleEditProfileClick() {
-    /**
-     * to display user info if the popup was closed with empty inputs
-     */
-    setCurrentUser({ ...currentUser });
     setEditProfilePopupState(true);
   }
 
   function handleAddPlaceClick() {
-    setCardName("");
-    setCardLink("");
     setAddPlacePopupState(true);
   }
 
@@ -149,6 +128,7 @@ function App() {
 
   function handleUpdateUser(userData) {
     setLoading(true);
+
     api
       .setUserData(userData)
       .then(updatedUserInfo => {
@@ -214,7 +194,6 @@ function App() {
           isLoading={isLoading}
           onClose={handleCloseAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          avatarRef={avatarRef}
         />
 
         <EditProfilePopup
@@ -229,12 +208,6 @@ function App() {
           isLoading={isLoading}
           onClose={handleCloseAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          cardData={{
-            name: cardName,
-            link: cardLink,
-            setCardName,
-            setCardLink,
-          }}
         />
 
         <DeleteCardPopup

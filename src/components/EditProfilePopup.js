@@ -1,24 +1,25 @@
 import { useState, useEffect, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
-import { handleInputChange } from "../utils/utils";
 
 function EditProfilePopup({ isOpen, isLoading, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState(currentUser.name);
-  const [description, setDescription] = useState(currentUser.about);
+  const [userData, setUserData] = useState({
+    name: currentUser.name,
+    about: currentUser.about,
+  });
+
+  function handleInputChange(evt) {
+    setUserData({ ...userData, [evt.target.name]: evt.target.value });
+  }
 
   useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
+    isOpen && setUserData({ name: currentUser.name, about: currentUser.about });
+  }, [currentUser, isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onUpdateUser({
-      name,
-      about: description,
-    });
+    onUpdateUser(userData);
   }
 
   return (
@@ -38,8 +39,8 @@ function EditProfilePopup({ isOpen, isLoading, onClose, onUpdateUser }) {
             placeholder="Введите имя"
             minLength="2"
             maxLength="40"
-            value={name}
-            onChange={evt => handleInputChange(evt, setName)}
+            value={userData.name}
+            onChange={handleInputChange}
             required
           />
           <span className="form__input-error name-input-error"></span>
@@ -52,8 +53,8 @@ function EditProfilePopup({ isOpen, isLoading, onClose, onUpdateUser }) {
             minLength="2"
             maxLength="200"
             placeholder="Введите род деятельности"
-            value={description}
-            onChange={evt => handleInputChange(evt, setDescription)}
+            value={userData.about}
+            onChange={handleInputChange}
             required
           />
           <span className="form__input-error about-input-error"></span>
