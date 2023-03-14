@@ -144,7 +144,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false));
+      .finally(() => setLoading(false));
   }
 
   function handleUpdateUser(userData) {
@@ -156,7 +156,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false));
+      .finally(() => setLoading(false));
   }
 
   function handleUpdateAvatar(avatarData) {
@@ -168,7 +168,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false));
+      .finally(() => setLoading(false));
   }
 
   function handleAddPlaceSubmit(cardData) {
@@ -180,7 +180,7 @@ function App() {
         closeAllPopups();
       })
       .catch(handleErrorCatch)
-      .finally(setLoading(false));
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {
