@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
@@ -24,14 +24,6 @@ function App() {
   const [cards, setCards] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  // const [isAnyPopupOpen, setIsAnyPopupOpen] = useState(false);
-
-  // function handleEscClose(evt) {
-  //   if (evt.code === 'Escape') {
-  //     closeAllPopups();
-  //   }
-  // }
-
   /**
    * set card data in App to clear AddPlacePopup inputs on opening AddPlacePopup
    */
@@ -39,32 +31,42 @@ function App() {
   const [cardLink, setCardLink] = useState("");
 
   /* -------------------------------------------- */
-  const popupsState = [
-    { state: isEditAvatarPopupOpen, setter: setEditAvatarPopupState },
-    { state: isEditProfilePopupOpen, setter: setEditProfilePopupState },
-    { state: isAddPlacePopupOpen, setter: setAddPlacePopupState },
-    { state: isImagePopupOpen, setter: setImagePopupState },
-    { state: isDeleteCardPopupOpen, setter: setDeleteCardPopupState },
-    { state: isErrorPopupOpen, setter: setErrorPopupState },
-  ];
+  const popupsState = useMemo(
+    () => [
+      { state: isEditAvatarPopupOpen, setter: setEditAvatarPopupState },
+      { state: isEditProfilePopupOpen, setter: setEditProfilePopupState },
+      { state: isAddPlacePopupOpen, setter: setAddPlacePopupState },
+      { state: isImagePopupOpen, setter: setImagePopupState },
+      { state: isDeleteCardPopupOpen, setter: setDeleteCardPopupState },
+      { state: isErrorPopupOpen, setter: setErrorPopupState },
+    ],
+    [
+      isEditAvatarPopupOpen,
+      isEditProfilePopupOpen,
+      isAddPlacePopupOpen,
+      isImagePopupOpen,
+      isDeleteCardPopupOpen,
+      isErrorPopupOpen,
+    ]
+  );
 
-  function handleEscClose(evt) {
-    if (evt.code === "Escape") {
-      closeAllPopups();
-    }
-  }
+  const closeAllPopups = useCallback(() => {
+    popupsState.forEach(popup => popup.state && popup.setter(false));
+  }, [popupsState]);
+
+  const handleEscClose = useCallback(
+    evt => evt.code === "Escape" && closeAllPopups(),
+    [closeAllPopups]
+  );
 
   useEffect(() => {
     popupsState.some(({ state }) => state === true) &&
       document.addEventListener("keydown", handleEscClose);
-  });
 
-  function closeAllPopups() {
-    document.removeEventListener("keydown", handleEscClose);
-    popupsState.forEach(popup => {
-      if (popup.state) popup.setter(false);
-    });
-  }
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [popupsState, handleEscClose]);
 
   function handleCloseAllPopups(evt) {
     const currentTarget = evt.target;
